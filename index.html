@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rutina Gym</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <h1 id="titulo">Rutina</h1>
+
+  <div class="controls">
+    <select id="selectorDia"></select>
+    <button id="resetDia">🔄</button>
+    <button onclick="exportarDatos()">⬇</button>
+
+    <label class="import-btn">
+      ⬆
+      <input type="file" hidden onchange="importarDatos(this.files[0])">
+    </label>
+  </div>
+</header>
+
+<main id="rutina"></main>
+
+<!-- MODAL NOTAS -->
+<div id="modalNota" class="modal oculto">
+  <div class="modal-content">
+    <h3 id="modalTitulo"></h3>
+
+    <label>Peso (kg)
+      <input type="number" id="notaPeso">
+    </label>
+
+    <label>Notas
+      <textarea id="notaTexto"></textarea>
+    </label>
+
+    <div class="modal-buttons">
+      <button id="guardarNota">Guardar</button>
+      <button id="cancelarNota">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/rutina.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+
+</body>
+</html>
