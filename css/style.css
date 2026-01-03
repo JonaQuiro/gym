@@ -77,7 +77,6 @@ input[type=checkbox] {
 }
 
 /* MODAL */
-
 .modal {
   position: fixed;
   inset: 0;
@@ -121,4 +120,17 @@ input[type=checkbox] {
 
 .oculto {
   display: none;
+}
+
+/* PANTALLA SELECCIÓN */
+.pantalla-seleccion {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#btnVolver {
+  margin: 12px;
+  padding: 10px;
 }

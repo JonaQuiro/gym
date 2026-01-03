@@ -19,12 +19,21 @@ const kSerie = (d,b,e,s)=>`gym_${d}_${b}_${e}_${s}`;
 const kHist = (d,e)=>`hist_${d}_${e.replace(/\s+/g,'_')}`;
 
 /* ===== INIT ===== */
-Object.keys(RUTINAS).forEach(d=>{
-  const o=document.createElement('option');
-  o.value=d;
-  o.textContent=RUTINAS[d].nombre;
-  selector.appendChild(o);
-});
+function iniciarApp() {
+  selector.innerHTML = '';
+
+  Object.keys(RUTINAS).forEach(d=>{
+    const o=document.createElement('option');
+    o.value=d;
+    o.textContent=RUTINAS[d].nombre;
+    selector.appendChild(o);
+  });
+
+  selector.onchange=()=>render(selector.value);
+  resetBtn.onclick=resetDia;
+
+  render(Object.keys(RUTINAS)[0]);
+}
 
 /* ===== HELPERS ===== */
 function ejercicioCompleto(d,b,e){
@@ -69,7 +78,7 @@ function toggleBloque(d,b,on){
   });
 }
 
-/* ===== NOTAS HISTÓRICAS ===== */
+/* ===== NOTAS ===== */
 function abrirNota(d,e){
   notaActual={d,e};
   modalTitulo.textContent=e;
@@ -80,7 +89,6 @@ function abrirNota(d,e){
 }
 
 btnGuardarNota.onclick=()=>{
-  if(!notaActual) return;
   const key=kHist(notaActual.d,notaActual.e);
   const hist=JSON.parse(localStorage.getItem(key)||'{}');
   hist[hoy]={peso:notaPeso.value,nota:notaTexto.value};
@@ -107,7 +115,6 @@ function importarDatos(file){
     const d=JSON.parse(e.target.result);
     Object.keys(d).forEach(k=>localStorage.setItem(k,d[k]));
     render(selector.value);
-    alert('Datos restaurados');
   };
   r.readAsText(file);
 }
@@ -137,7 +144,7 @@ function render(d){
       <tr>
         <th>Ejercicio</th><th>X</th>
         ${[1,2,3,4].map(s=>`
-          <th>${s}°<br>
+          <th>${s}°
             <input type="checkbox"
               ${serieCompleta(d,b,s)?'checked':''}
               onchange="toggleSerie('${d}',${b},${s},this.checked);render('${d}')">
@@ -182,7 +189,3 @@ function resetDia(){
     .forEach(k=>localStorage.removeItem(k));
   render(d);
 }
-
-selector.onchange=()=>render(selector.value);
-resetBtn.onclick=resetDia;
-render(Object.keys(RUTINAS)[0]);

@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rutina</title>
 
+  <link rel="manifest" href="manifest.json">
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,6 +14,7 @@
 <!-- SELECCIÓN DE RUTINA -->
 <div id="pantallaSeleccion" class="pantalla-seleccion">
   <h2>¿Qué rutina vas a hacer?</h2>
+
   <button onclick="cargarRutina('casa')">🏠 Rutina en casa</button>
   <button onclick="cargarRutina('gym')">🏋️ Rutina GYM</button>
 </div>
@@ -35,8 +38,6 @@
 </header>
 
 <main id="rutina"></main>
-
-<button id="btnVolver" onclick="volverInicio()">⬅ Volver al inicio</button>
 
 </div>
 
@@ -66,7 +67,9 @@
 let rutinaScript = null;
 
 function cargarRutina(tipo) {
+  // limpiar rutinas previas
   delete window.RUTINAS;
+
   if (rutinaScript) rutinaScript.remove();
 
   rutinaScript = document.createElement('script');
@@ -82,13 +85,16 @@ function cargarRutina(tipo) {
 
   document.body.appendChild(rutinaScript);
 }
+</script>
 
-function volverInicio() {
-  document.getElementById('app').classList.add('oculto');
-  document.getElementById('pantallaSeleccion').classList.remove('oculto');
-  document.getElementById('rutina').innerHTML = '';
+<!-- ⚠️ Service Worker desactivado para file:// -->
+<!--
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
 }
 </script>
+-->
 
 </body>
 </html>
